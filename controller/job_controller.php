@@ -4,35 +4,40 @@
             
             <div class="col-lg-12 col-md-12 col-sm-12">	
                 <!-- Start All List -->
-                <div class="row justify-content-center gx-xl-3 gx-3 gy-4">
-                    <?php
+                <div class="row justify-content-center gx-xl-3 gx-3 gy-4">                    <?php
                         include('actions/conbd.php'); 
-                        $txtSearchField = $_GET['research'];
-                        $sql="SELECT services.id, 
-                                    services.pays_service, 
-                                    services.title, 
-                                    services.ville_service, 
-                                    services.salaire_service, 
-                                    services.created_at, 
-                                    services.description_service,
-                                    users.nom,
-                                    users.prenom,
-                                    users.img
-                                FROM services
-                                INNER JOIN users 
-                                ON services.user_id=users.id
-                                WHERE  CONCAT(services.title, ' ',
-                                                services.pays_service, ' ',
-                                                services.ville_service, ' ',
-                                                users.nom, ' ',
-                                                users.prenom
-                                                ) LIKE '%$txtSearchField%'" ;//see the $ sign here
-                                //Finally, execute query and get result
+                        
+                        // Vérification et nettoyage du terme de recherche
+                        $txtSearchField = isset($_GET['research']) ? mysqli_real_escape_string($link, trim($_GET['research'])) : '';
+                        
+                        if(empty($txtSearchField)) {
+                            echo '<div class="col-12"><div class="alert alert-warning text-center">Veuillez saisir un terme de recherche.</div></div>';
+                        } else {
+                            $sql="SELECT services.id, 
+                                        services.pays_service, 
+                                        services.title, 
+                                        services.ville_service, 
+                                        services.salaire_service, 
+                                        services.created_at, 
+                                        services.description_service,
+                                        users.nom,
+                                        users.prenom,
+                                        users.img
+                                    FROM services
+                                    INNER JOIN users 
+                                    ON services.user_id=users.id
+                                    WHERE  CONCAT(services.title, ' ',
+                                                    services.pays_service, ' ',
+                                                    services.ville_service, ' ',
+                                                    users.nom, ' ',
+                                                    users.prenom
+                                                    ) LIKE '%$txtSearchField%'" ;//see the $ sign here                                //Finally, execute query and get result
                                     /* echo $sql;		
                                     exit; */
                                     $query = mysqli_query($link,$sql);	
                                     $nblignes=mysqli_num_rows($query);	
                                     if($nblignes>0){
+                                        echo '<div class="col-12 mb-3"><div class="alert alert-info">'.  $nblignes .' résultat(s) trouvé(s) pour "<strong>'. htmlspecialchars($txtSearchField) .'</strong>"</div></div>';
                                         $i=1;
                                         while($data = mysqli_fetch_array($query)){
                                             $i++;
@@ -65,10 +70,12 @@
                                                             </div>
                                                         </div>
                                                     </div>	
-                                                </div>';
-                                        
+                                                </div>';                                        
                                         }
+                                    } else {
+                                        echo '<div class="col-12"><div class="alert alert-warning text-center">Aucun résultat trouvé pour "<strong>'. htmlspecialchars($txtSearchField) .'</strong>". <br><br><a href="services.php" class="btn btn-primary">Voir tous les services</a></div></div>';
                                     }
+                        }
                     ?>
 
 

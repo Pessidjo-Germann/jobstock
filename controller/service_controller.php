@@ -1,8 +1,23 @@
 <?php
+// Inclure les fonctions de routage
+include_once('includes/routing.php');
+
+// Vérification de la présence du paramètre 'job'
+if(!isset($_GET['job']) || empty($_GET['job'])) {
+    redirectWithError('services.php', 'service_not_specified');
+}
+
+// Vérifier si le service_id est numérique
+if(!validateNumericId($_GET['job'])) {
+    redirectWithError('services.php', 'invalid_service_id');
+}
+
 if(isset($_GET['job'])){
 		$service = $_GET['job'];
-		include('actions/conbd.php'); 
-		$sql_update = "UPDATE `services` SET `view_service`=(view_service+1) WHERE `id` = $service ";
+		include('actions/conbd.php');
+				// Nettoyer l'ID du service
+		$service_id = sanitizeInput($service);
+		$sql_update = "UPDATE `services` SET `view_service`=(view_service+1) WHERE `id` = $service_id ";
 		$query_update = mysqli_query($link,$sql_update);
 
 		$sql="SELECT services.id as 'service_id', 
@@ -33,8 +48,7 @@ if(isset($_GET['job'])){
 		
 		INNER JOIN users 
 		ON services.user_id=users.id 
-		WHERE services.id = $service;";
-		/* echo $sql;		
+		WHERE services.id = $service_id;";/* echo $sql;		
 		exit; */
 		$query = mysqli_query($link,$sql);	
 		$nblignes=mysqli_num_rows($query);	
@@ -312,11 +326,11 @@ if(isset($_GET['job'])){
 <!-- End Modal -->
 
 <?php
-}
-}else{
-	header("location:services.php");
-}
-}else{
-	header("location:services.php");
+		}	} else {
+		// Service non trouvé - utiliser la fonction de routage
+		redirectWithError('services.php', 'service_not_found');
+	}
+} else {
+	redirectWithError('services.php', 'service_not_specified');
 }
 ?>

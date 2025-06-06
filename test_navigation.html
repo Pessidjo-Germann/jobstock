@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Navigation - Digex Booker</title>
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <link href="assets/css/colors.css" rel="stylesheet">
+</head>
+<body class="blue-theme">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>🧪 Test de Navigation - Digex Booker</h3>
+                    </div>
+                    <div class="card-body">
+                        <h5>Test des liens de navigation :</h5>
+                        
+                        <div class="list-group mb-4">
+                            <a href="index.php" class="list-group-item list-group-item-action">
+                                🏠 Page d'accueil (index.php)
+                            </a>
+                            <a href="services.php" class="list-group-item list-group-item-action">
+                                📋 Liste des services (services.php)
+                            </a>
+                            <a href="about.php" class="list-group-item list-group-item-action">
+                                ℹ️ À propos (about.php)
+                            </a>
+                        </div>
+
+                        <h5>Test des recherches :</h5>
+                        <div class="list-group mb-4">
+                            <a href="job.php?research=développeur" class="list-group-item list-group-item-action">
+                                🔍 Recherche "développeur"
+                            </a>
+                            <a href="job.php?research=design" class="list-group-item list-group-item-action">
+                                🔍 Recherche "design"
+                            </a>
+                        </div>
+
+                        <h5>Test des erreurs :</h5>
+                        <div class="list-group mb-4">
+                            <a href="job.php" class="list-group-item list-group-item-action list-group-item-warning">
+                                ⚠️ job.php sans paramètres (doit rediriger vers services.php)
+                            </a>
+                            <a href="service.php" class="list-group-item list-group-item-action list-group-item-warning">
+                                ⚠️ service.php sans paramètres (doit rediriger avec erreur)
+                            </a>
+                            <a href="service.php?job=999999" class="list-group-item list-group-item-action list-group-item-warning">
+                                ⚠️ service.php avec ID inexistant
+                            </a>
+                            <a href="service.php?job=abc" class="list-group-item list-group-item-action list-group-item-warning">
+                                ⚠️ service.php avec ID non-numérique
+                            </a>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <strong>Instructions :</strong>
+                            <ul class="mb-0">
+                                <li>Cliquez sur chaque lien pour tester la navigation</li>
+                                <li>Vérifiez que les redirections fonctionnent correctement</li>
+                                <li>Les liens d'erreur doivent rediriger avec des messages appropriés</li>
+                                <li>Supprimez ce fichier après les tests</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/bootstrap.min.js"></script>
+</body>
+</html>

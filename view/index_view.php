@@ -9,15 +9,14 @@
                     <!-- <div class="inner-banner-eclips mb-2"><span class="label p-2 px-4 rounded-5 fw-medium text-light bg-primary">Get Your Hot Jobs</span></div> -->
                     <h1>Trouve la solution a<br>Ton probleme</h1>
                     <p class="fs-5">Resoudre un proleme n'est jamais facile. Vérifiez les nouvelles solution que nous vous réservons sur Digex Booker.</p>
-                </div>
-                <div class="search-from-clasic mt-5">
-                    <form action="job.php" method="get" class="hero-search-content">
+                </div>                <div class="search-from-clasic mt-5">
+                    <form action="job.php" method="get" class="hero-search-content" onsubmit="return validateSearch()">
                         <div class="row"> 								
                             <div class="col-xl-10 col-lg-10 col-md-9 col-sm-12">
                                 <div class="classic-search-box">
                                     <div class="form-group full">
                                         <div class="input-with-icon">
-                                            <input type="text" class="form-control" name="research" placeholder="Rechercher une localité, un point de repère, un projet ou un constructeur">
+                                            <input type="text" class="form-control" name="research" id="searchInput" placeholder="Rechercher une localité, un point de repère, un projet ou un constructeur" required minlength="2">
                                             <img src="assets/img/pin.svg" width="20" alt="">
                                         </div>
                                     </div>
@@ -32,6 +31,20 @@
                                     
                         </div>
                     </form>
+                    
+                    <script>
+                    function validateSearch() {
+                        const searchInput = document.getElementById('searchInput');
+                        const searchValue = searchInput.value.trim();
+                        
+                        if (searchValue.length < 2) {
+                            alert('Veuillez saisir au moins 2 caractères pour effectuer une recherche.');
+                            searchInput.focus();
+                            return false;
+                        }
+                        return true;
+                    }
+                    </script>
                 </div>
                 
             </div>

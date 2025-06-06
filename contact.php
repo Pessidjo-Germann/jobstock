@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html lang="en">
 	
@@ -72,3 +73,9 @@
 
 <!-- Mirrored from shreethemes.net/jobstock-landing-2.2/jobstock/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 Sep 2024 12:33:42 GMT -->
 </html>
+<?php
+// Masquer le bouton "Log In" si l'utilisateur est connecté
+if (isset($_SESSION['connect'])) {
+    echo "<script>document.addEventListener('DOMContentLoaded', function() {\n    var loginBtns = document.querySelectorAll('[data-bs-target=\"#login\"]');\n    loginBtns.forEach(function(btn) { btn.style.display = 'none'; });\n});</script>";
+}
+?>

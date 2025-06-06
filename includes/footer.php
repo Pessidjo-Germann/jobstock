@@ -76,8 +76,7 @@
                             <li><a href="JavaScript:Void(0);">Payroll Services</a></li>
                             <li><a href="JavaScript:Void(0);">Direct Contracts</a></li>
                             <li><a href="JavaScript:Void(0);">Hire Worldwide</a></li>
-                            <li><a href="JavaScript:Void(0);">Hire in the USA</a></li>
-                            <li><a href="JavaScript:Void(0);">How to Hire</a></li>
+                           
                         </ul>
                     </div>
                 </div>

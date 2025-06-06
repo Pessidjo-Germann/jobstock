@@ -1,6 +1,25 @@
 
-<?php session_start()?>
+<?php 
+session_start();
 
+// Fonction de gestion du routage
+function handleRouting() {
+    // Si on a un paramètre 'job' pour voir un service spécifique, rediriger vers service.php
+    if(isset($_GET['job']) && !empty($_GET['job'])) {
+        header("Location: service.php?job=" . $_GET['job']);
+        exit;
+    }
+    
+    // Si on n'a pas de paramètre de recherche, rediriger vers services.php
+    if(!isset($_GET['research']) || empty(trim($_GET['research']))) {
+        header("Location: services.php");
+        exit;
+    }
+}
+
+// Appeler la fonction de routage
+handleRouting();
+?>
 
 <!doctype html>
 <html lang="en">

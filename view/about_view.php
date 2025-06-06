@@ -1,4 +1,3 @@
-
 <!-- ============================ Page Title Start================================== -->
 <section class="page-head bg-cover" style="background:#017efa url(assets/img/about.jpg) no-repeat;" data-overlay="4">
     <div class="container">
@@ -46,7 +45,7 @@
 </section>
 <!-- ============================ Our Story End ================================== -->
 
-<!-- ================= Our Team================= -->
+<!-- ============================ Nos Collaborateurs Start ================================== -->
 <section class="gray-simple">
     <div class="container">
     
@@ -143,20 +142,88 @@
     
     </div>
 </section>
-<!-- =============================== Our Team ================================== -->
+<!-- =============================== Nos Collaborateurs ================================== -->
 
 <!-- ============================ Valuable Step Start ================================== -->
 <?php include("includes/step.php")?>
 <!-- ============================ Valuable Step End ================================== -->
 
 
-<!-- ============================ Good Reviews By Customers ================================== -->
-<?php include("includes/temoignage.php")?>
-<!-- ============================ Good Reviews By Customers ================================== -->
+<!-- ============================ Section Témoignages Start ================================== -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-8 text-center">
+                <h2 class="fw-bold mb-3">Ils nous font confiance</h2>
+                <p class="text-muted">Découvrez les témoignages de nos utilisateurs satisfaits !</p>
+            </div>
+        </div>
+        <div id="temoignagesCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="card shadow-sm border-0 p-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="assets/img/cand-1.png" alt="Utilisateur 1" class="rounded-circle me-3" width="60" height="60">
+                                    <div>
+                                        <h5 class="mb-0">Fatou N.</h5>
+                                        <small class="text-muted">Entrepreneure à Douala</small>
+                                    </div>
+                                </div>
+                                <p class="mb-0">"Grâce à Digex Booker, j'ai trouvé rapidement un prestataire fiable pour mon projet. Le service est rapide, efficace et très professionnel. Je recommande vivement !"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="card shadow-sm border-0 p-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="assets/img/cand-2.png" alt="Utilisateur 2" class="rounded-circle me-3" width="60" height="60">
+                                    <div>
+                                        <h5 class="mb-0">Jean-Paul T.</h5>
+                                        <small class="text-muted">Freelance à Yaoundé</small>
+                                    </div>
+                                </div>
+                                <p class="mb-0">"La plateforme m'a permis de décrocher plusieurs missions en peu de temps. L'interface est simple et intuitive. Merci à toute l'équipe !"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="card shadow-sm border-0 p-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="assets/img/cand-3.png" alt="Utilisateur 3" class="rounded-circle me-3" width="60" height="60">
+                                    <div>
+                                        <h5 class="mb-0">Aminata S.</h5>
+                                        <small class="text-muted">Consultante à Abidjan</small>
+                                    </div>
+                                </div>
+                                <p class="mb-0">"J'ai apprécié la réactivité du support et la qualité des profils proposés. Digex Booker a vraiment simplifié ma recherche de partenaires."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#temoignagesCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Précédent</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#temoignagesCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Suivant</span>
+            </button>
+        </div>
+    </div>
+</section>
+<!-- ============================ Section Témoignages End ================================== -->
 
 
 <!-- ============================ Call To Action ================================== -->
 <?php include('includes/candidature.php')?>
 
 <!-- ============================ Call To Action End ================================== -->
-    

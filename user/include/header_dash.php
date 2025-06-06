@@ -1,4 +1,12 @@
-
+<?php
+// Sécurisation de l'accès à la clé 'img' dans la session
+$img = isset($_SESSION['connect']['img']) ? $_SESSION['connect']['img'] : '';
+if(trim((string)$img) !== ''){
+    $image = '../images_users/'.$img;
+}else{
+    $image = '../assets/img/user.png';
+}
+?>
 <!-- Start Navigation -->
 <div class="header header-light head-fixed">
     <div class="container">
@@ -22,11 +30,7 @@
                     <li><a href="../contact.php">Contact</a></li>
                 </ul>
                 <?php     
-                    if(trim($_SESSION['connect']['img']) > 0){
-                        $image = '../images_users/'.$_SESSION['connect']['img'];
-                    }else{
-                        $image = '../assets/img/user.png';
-                    }
+                    // ...existing code...
                 ?>
                 <ul class="nav-menu nav-menu-social align-to-right dhsbrd">
                     <li>
@@ -36,7 +40,7 @@
                             </button>
                             <div class="dropdown-menu pull-right animated flipInX">
                                 <div class="drp_menu_headr bg-primary">
-                                    <h4>Hi, <?=$_SESSION['connect']['prenom']?></h4>
+                                    <h4>Hi, <?php echo isset($_SESSION['connect']['prenom']) ? htmlspecialchars($_SESSION['connect']['prenom']) : 'Utilisateur'; ?></h4>
                                     <div class="drp_menu_headr-right"><button type="button" class="btn btn-whites"><a href="../logout.php"> Logout</a></button></div>
                                 </div>
                                 <ul>

@@ -1,4 +1,11 @@
-<?php session_start()?>
+<?php
+session_start();
+// Redirige vers signup.php seulement si l'utilisateur n'est pas connecté
+if (!isset($_SESSION['connect'])) {
+    header('Location: signup.php');
+    exit;
+}
+?>
 
 
 <!doctype html>
@@ -29,7 +36,7 @@
         <!-- Main wrapper - style you can find in pages.scss -->
         <!-- ============================================================== -->
         <div id="main-wrapper">
-            <!-- ============================================================== -->
+			  <!-- ============================================================== -->
             <!-- Top header  -->
             <!-- ============================================================== -->
             <?php include('includes/header.php')?>

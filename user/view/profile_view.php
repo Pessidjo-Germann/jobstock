@@ -21,7 +21,7 @@
                 <div class="dash-prf-start">
                     <div class="dash-prf-start-upper mb-2">
                         <div class="dash-prf-start-thumb jbs-verified">
-                            <figure class="mb-0"><img src="../images_users/<?=$_SESSION['connect']['img']?>" id="user_avatar" class="img-fluid rounded" alt="<?=$_SESSION['connect']['nom']?>" style="width: 100px;height: 100px;"></figure>
+                            <figure class="mb-0"><img src="../images_users/<?php echo isset($_SESSION['connect']['img']) ? htmlspecialchars($_SESSION['connect']['img']) : 'user.png'; ?>" id="user_avatar" class="img-fluid rounded" alt="<?php echo isset($_SESSION['connect']['nom']) ? htmlspecialchars($_SESSION['connect']['nom']) : ''; ?>" style="width: 100px;height: 100px;"></figure>
                         </div>
                     </div>
                     <form action="" id="image_form" class="dash-prf-start-bottom">
@@ -169,7 +169,7 @@
                             <div class="col-xl-6 col-lg-6 col-md-12">
                                 <div class="form-group">
                                     <label>Facebook</label>
-                                    <input type="text" class="form-control" name="fb" id="fb" value="<?=$_SESSION['connect']['network']['facebook']?>">
+                                    <input type="text" class="form-control" name="fb" id="fb" value="<?php echo isset($_SESSION['connect']['network']['facebook']) ? htmlspecialchars($_SESSION['connect']['network']['facebook']) : ''; ?>">
                                 </div>
                             </div>
                             
@@ -177,21 +177,21 @@
                             <div class="col-xl-6 col-lg-6 col-md-12">
                                 <div class="form-group">
                                     <label>Instagram</label>
-                                    <input type="text" class="form-control" name="ig" id="ig" value="<?=$_SESSION['connect']['network']['instagram']?>">
+                                    <input type="text" class="form-control" name="ig" id="ig" value="<?php echo isset($_SESSION['connect']['network']['instagram']) ? htmlspecialchars($_SESSION['connect']['network']['instagram']) : ''; ?>">
                                 </div>
                             </div>
                             
                             <div class="col-xl-6 col-lg-6 col-md-12">
                                 <div class="form-group">
                                     <label>Linked In</label>
-                                    <input name="li" id="li" type="text" class="form-control" value="<?=$_SESSION['connect']['network']['linkin']?>">
+                                    <input name="li" id="li" type="text" class="form-control" value="<?php echo isset($_SESSION['connect']['network']['linkin']) ? htmlspecialchars($_SESSION['connect']['network']['linkin']) : ''; ?>">
                                 </div>
                             </div>
                             
                             <div class="col-xl-6 col-lg-6 col-md-12">
                                 <div class="form-group">
                                     <label>Twitter</label>
-                                    <input name="x" id="x" type="text" class="form-control" value="<?=$_SESSION['connect']['network']['tweeter']?>">
+                                    <input name="x" id="x" type="text" class="form-control" value="<?php echo isset($_SESSION['connect']['network']['tweeter']) ? htmlspecialchars($_SESSION['connect']['network']['tweeter']) : ''; ?>">
                                 </div>
                             </div>
                         </div> 
