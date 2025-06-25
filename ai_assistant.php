@@ -270,17 +270,13 @@ Exemples de questions que vous pouvez poser :
 		<!-- ============================================================== -->
 
 		<!-- All Jquery -->
-		<script src="assets/js/jquery-3.7.1.min.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/popper.min.js"></script>
 		<script src="assets/js/bootstrap.min.js"></script>
-		<script src="assets/js/dropzone.min.js"></script>
-		<script src="assets/js/flatpickr.js"></script>
-		<script src="assets/js/flickity.pkgd.min.js"></script>
-		<script src="assets/js/lightbox.min.js"></script>
 		<script src="assets/js/rangeslider.js"></script>
-		<script src="assets/js/select2.min.js"></script>
+		<script src="assets/js/jquery.nice-select.min.js"></script>
+		<script src="assets/js/slick.js"></script>
 		<script src="assets/js/counterup.min.js"></script>
-		<script src="assets/js/waypoints.min.js"></script>
 		<script src="assets/js/custom.js"></script>
 		
 		<!-- JavaScript pour gérer les interactions avec l'IA -->
