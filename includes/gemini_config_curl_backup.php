@@ -1,16 +1,16 @@
 <?php
 /**
- * Configuration pour l'API Google Gemini (Version alternative sans curl)
+ * Configuration pour l'API Google Gemini
  * 
  * Instructions d'installation :
  * 1. Obtenez une clé API Gemini sur : https://makersuite.google.com/app/apikey
- * 2. Remplacez 'YOUR_GEMINI_API_KEY_HERE' par votre vraie clé API
- * 3. Cette version utilise file_get_contents() au lieu de curl
+ * 2. Remplacez 'AIzaSyC3cdxJrrEZ15dhj6TeU9hbEh2stAXeI2E' par votre vraie clé API
+ * 3. Assurez-vous que curl est installé sur votre serveur
  */
 
 // Configuration de l'API Gemini
-define('GEMINI_API_KEY', 'AIzaSyC3cdxJrrEZ15dhj6TeU9hbEh2stAXeI2E'); // Votre clé API
-define('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent');
+define('GEMINI_API_KEY', 'AIzaSyC3cdxJrrEZ15dhj6TeU9hbEh2stAXeI2E'); // Remplacez par votre clé API
+define('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent');
 
 // Configuration des limites
 define('GEMINI_MAX_QUESTION_LENGTH', 1000); // Longueur maximale de la question
@@ -18,18 +18,17 @@ define('GEMINI_MAX_TOKENS', 1000); // Nombre maximum de tokens dans la réponse
 define('GEMINI_TIMEOUT', 30); // Timeout en secondes pour l'appel API
 
 /**
- * Classe pour gérer les interactions avec l'API Gemini (Version file_get_contents)
+ * Classe pour gérer les interactions avec l'API Gemini
  */
 class GeminiAI {
     private $apiKey;
     private $apiUrl;
-    private $lastError = '';
     
     public function __construct() {
         $this->apiKey = GEMINI_API_KEY;
         $this->apiUrl = GEMINI_API_URL;
         
-        if ($this->apiKey === 'YOUR_GEMINI_API_KEY_HERE') {
+        if ($this->apiKey === 'AIzaSyC3cdxJrrEZ15dhj6TeU9hbEh2stAXeI2E') {
             throw new Exception('Veuillez configurer votre clé API Gemini dans includes/gemini_config.php');
         }
     }
@@ -70,48 +69,43 @@ class GeminiAI {
             ]
         ];
         
-        // Appel à l'API via file_get_contents
+        // Appel à l'API via curl
         return $this->callGeminiAPI($data);
     }
     
     /**
-     * Effectue l'appel vers l'API Gemini avec file_get_contents
+     * Effectue l'appel curl vers l'API Gemini
      */
     private function callGeminiAPI($data) {
         $url = $this->apiUrl . '?key=' . $this->apiKey;
         
-        // Préparation du contexte HTTP
-        $context = stream_context_create([
-            'http' => [
-                'method' => 'POST',
-                'header' => [
-                    'Content-Type: application/json',
-                    'User-Agent: JobStock-DigexBooker/1.0'
-                ],
-                'content' => json_encode($data),
-                'timeout' => GEMINI_TIMEOUT,
-                'ignore_errors' => true // Pour pouvoir lire les réponses d'erreur
-            ]
+        $ch = curl_init();
+        
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+                'User-Agent: JobStock-DigexBooker/1.0'
+            ],
+            CURLOPT_TIMEOUT => GEMINI_TIMEOUT,
+            CURLOPT_CONNECTTIMEOUT => 10,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS => 3
         ]);
         
-        // Exécution de la requête
-        $response = file_get_contents($url, false, $context);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
         
-        // Vérification des erreurs
+        curl_close($ch);
+        
+        // Gestion des erreurs curl
         if ($response === false) {
-            $this->lastError = 'Erreur de connexion à l\'API Gemini';
-            throw new Exception($this->lastError);
-        }
-        
-        // Récupération du code de réponse HTTP
-        $httpCode = 200; // Par défaut
-        if (isset($http_response_header)) {
-            foreach ($http_response_header as $header) {
-                if (preg_match('/HTTP\/\d\.\d\s+(\d+)/', $header, $matches)) {
-                    $httpCode = intval($matches[1]);
-                    break;
-                }
-            }
+            throw new Exception('Erreur de connexion à l\'API Gemini: ' . $error);
         }
         
         // Gestion des codes d'erreur HTTP
@@ -120,38 +114,22 @@ class GeminiAI {
             $errorMessage = isset($errorData['error']['message']) ? 
                            $errorData['error']['message'] : 
                            'Erreur API (Code: ' . $httpCode . ')';
-            $this->lastError = 'Erreur API Gemini: ' . $errorMessage;
-            throw new Exception($this->lastError);
+            throw new Exception('Erreur API Gemini: ' . $errorMessage);
         }
         
         // Décodage de la réponse
         $responseData = json_decode($response, true);
         
         if (json_last_error() !== JSON_ERROR_NONE) {
-            $this->lastError = 'Erreur de décodage de la réponse JSON: ' . json_last_error_msg();
-            throw new Exception($this->lastError);
+            throw new Exception('Erreur de décodage de la réponse JSON');
         }
         
         // Extraction de la réponse
         if (isset($responseData['candidates'][0]['content']['parts'][0]['text'])) {
-            $this->lastError = '';
             return $responseData['candidates'][0]['content']['parts'][0]['text'];
         }
         
-        // Gestion des cas où l'IA refuse de répondre
-        if (isset($responseData['candidates'][0]['finishReason'])) {
-            $finishReason = $responseData['candidates'][0]['finishReason'];
-            if ($finishReason === 'SAFETY') {
-                $this->lastError = 'L\'IA a refusé de répondre pour des raisons de sécurité';
-                throw new Exception($this->lastError);
-            } elseif ($finishReason === 'RECITATION') {
-                $this->lastError = 'L\'IA a refusé de répondre pour éviter la récitation';
-                throw new Exception($this->lastError);
-            }
-        }
-        
-        $this->lastError = 'Format de réponse inattendu de l\'API Gemini';
-        throw new Exception($this->lastError);
+        throw new Exception('Format de réponse inattendu de l\'API Gemini');
     }
     
     /**
@@ -171,13 +149,6 @@ class GeminiAI {
                 'message' => 'Erreur de connexion: ' . $e->getMessage()
             ];
         }
-    }
-    
-    /**
-     * Retourne la dernière erreur survenue
-     */
-    public function getLastError() {
-        return $this->lastError;
     }
 }
 

@@ -1,5 +1,6 @@
 {
     "require": {
-        "phpmailer/phpmailer": "^6.10"
+        "phpmailer/phpmailer": "^6.10",
+        "gemini-api-php/client": "^0.7.0"
     }
 }

@@ -10,7 +10,7 @@
 
 // Configuration de l'API Gemini
 define('GEMINI_API_KEY', 'AIzaSyC3cdxJrrEZ15dhj6TeU9hbEh2stAXeI2E'); // Votre clé API
-define('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent');
+define('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent');
 
 // Configuration des limites
 define('GEMINI_MAX_QUESTION_LENGTH', 1000); // Longueur maximale de la question
