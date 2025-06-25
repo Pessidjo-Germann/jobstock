@@ -21,10 +21,9 @@ if (!isset($_SESSION['verification_email']) || !isset($_SESSION['verification_ac
     <link href="assets/css/colors.css" rel="stylesheet">
     
     <?php 
+    $alertMessage = '';
     if(isset($_GET['message'])){
-        echo'<script>
-                alert('.$_GET['message'].');
-            </script>';
+        $alertMessage = htmlspecialchars(urldecode($_GET['message']), ENT_QUOTES, 'UTF-8');
     }
     ?>
 </head>

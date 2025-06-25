@@ -1,5 +1,6 @@
 <?php
 session_start();
+header('Content-Type: text/html; charset=UTF-8');
 include('./conbd.php');
 include('../includes/email_verification.php');
 
@@ -31,7 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("location: ../email_verification.php?message=\"Un nouveau code a été envoyé à votre adresse email\"");
             exit;
         } else {
-            header("location: ../email_verification.php?message=\"Erreur lors de l'envoi de l'email\"");
+            // Récupérer le dernier message d'erreur pour plus de détails
+            $lastError = $emailVerification->getLastError();
+            $errorMsg = !empty($lastError) ? $lastError : "Erreur lors de l'envoi de l'email. Vérifiez votre configuration SMTP.";
+            header("location: ../email_verification.php?message=\"" . urlencode($errorMsg) . "\"");
             exit;
         }
     } else {

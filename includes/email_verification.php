@@ -9,6 +9,7 @@ use PHPMailer\PHPMailer\Exception;
 class EmailVerification {
     private $link;
     private $config;
+    private $lastError = '';
     
     public function __construct($database_connection) {
         $this->link = $database_connection;
@@ -129,17 +130,27 @@ class EmailVerification {
             $result = $mail->send();
             
             if ($result) {
+                $this->lastError = '';
                 error_log("Email envoyé avec succès à: " . $email);
                 return true;
             } else {
+                $this->lastError = "Échec de l'envoi d'email. Vérifiez votre configuration SMTP.";
                 error_log("Échec de l'envoi d'email à: " . $email);
                 return false;
             }
             
         } catch (Exception $e) {
-            error_log("Erreur PHPMailer: " . $e->getMessage());
+            $this->lastError = "Erreur PHPMailer: " . $e->getMessage();
+            error_log($this->lastError);
             return false;
         }
+    }
+    
+    /**
+     * Retourne la dernière erreur survenue
+     */
+    public function getLastError() {
+        return $this->lastError;
     }
     
     /**
