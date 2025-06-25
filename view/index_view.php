@@ -1,5 +1,3 @@
-
-
 <!-- ============================ Hero Banner  Start================================== -->
 <div class="image-bg hero-header" style="background:#237eFF url(assets/img/simple-banner.jpg) no-repeat;">
     <div class="container">
@@ -98,6 +96,10 @@
 </section>
 <div class="clearfix"></div>
 <!-- ============================ Statistique End ================================== -->
+
+<!-- ============================ IA Assistant Start ================================== -->
+<?php include("view/gemini_ai_section.php")?>
+<!-- ============================ IA Assistant End ================================== -->
 
 <!-- ============================ Services Start ================================== -->
 <?php include("controller/service_controller_index.php")?>

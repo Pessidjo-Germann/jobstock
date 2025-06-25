@@ -28,6 +28,7 @@
                 <ul class="nav-menu"> 
                     <li <?= basename($_SERVER['PHP_SELF']) == 'index.php'? "class='active'" : ""; ?> ><a href="index.php">accueil </a></li>
                     <li <?= basename($_SERVER['PHP_SELF']) == 'services.php'? "class='active'" : ""; ?>><a href="services.php">Services</a></li>
+                    <li <?= basename($_SERVER['PHP_SELF']) == 'ai_assistant.php'? "class='active'" : ""; ?>><a href="ai_assistant.php"><i class="fas fa-robot me-1"></i>Assistant IA</a></li>
                     <li <?= basename($_SERVER['PHP_SELF']) == 'about.php'? "class='active'" : ""; ?>><a href="about.php">A propos de nous</a></li>
                     <li <?= basename($_SERVER['PHP_SELF']) == 'contact.php'? "class='active'" : ""; ?>><a href="contact.php">Contact</a></li>
 
