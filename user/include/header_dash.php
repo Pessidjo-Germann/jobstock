@@ -45,7 +45,8 @@ if(trim((string)$img) !== ''){
                                 </div>
                                 <ul>
                                     <li><a href="index.php"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>                                  
-                                    <li><a href="profile.php"><i class="fa fa-user-tie"></i>My Profile</a></li>  
+                                    <li><a href="profile.php"><i class="fa fa-user-tie"></i>My Profile</a></li>
+                                    <li><a href="chat.php"><i class="fa fa-comments"></i>Messages & Chat</a></li>
                                     <li><a href="password.php"><i class="fa fa-unlock-alt"></i>Change Password</a></li>
                                     <li><a href="delete.php"><i class="fa-solid fa-trash-can"></i>Delete Account</a></li>
                                 </ul>

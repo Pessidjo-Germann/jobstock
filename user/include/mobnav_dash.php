@@ -30,7 +30,7 @@
                 <li <?= basename($_SERVER['PHP_SELF']) == 'profile.php'? "class='active'" : ""; ?>><a href="profile.php"><i class="fa-regular fa-user me-2"></i>My Profile </a></li>
                 <li <?= basename($_SERVER['PHP_SELF']) == 'job.php'? "class='active'" : ""; ?>><a href="job.php"><i class="fa-solid fa-file-pdf me-2"></i>My services</a></li>
                 <li <?= basename($_SERVER['PHP_SELF']) == 'create_job.php'? "class='active'" : ""; ?>><a href="create_job.php"><i class="fa-solid fa-pen-ruler me-2"></i>Add service</a></li>
-
+                <li <?= basename($_SERVER['PHP_SELF']) == 'chat.php'? "class='active'" : ""; ?>><a href="chat.php"><i class="fa-solid fa-comments me-2"></i>Messages & Chat</a></li>
                 <li <?= basename($_SERVER['PHP_SELF']) == 'password.php'? "class='active'" : ""; ?>><a href="password.php"><i class="fa-solid fa-unlock-keyhole me-2"></i>Change Password</a></li>
                 <li <?= basename($_SERVER['PHP_SELF']) == 'delete.php'? "class='active'" : ""; ?>><a href="delete.php"><i class="fa-solid fa-trash-can me-2"></i>Delete Account</a></li>
                 <li><a href="../logout.php"><i class="fa-solid fa-power-off me-2"></i>Log Out</a></li>

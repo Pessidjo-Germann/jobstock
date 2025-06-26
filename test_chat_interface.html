@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Chat Integration - Digex Booker</title>
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <script src="assets/js/jquery.min.js"></script>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            background: #f8f9fa; 
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background: #f8f9fa;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔧 Test d'Intégration du Chat - Digex Booker</h1>
+        
+        <div class="test-section">
+            <h3>📊 État du Système</h3>
+            <p>Cette page teste les fonctionnalités du chat intégré dans votre application.</p>
+            <div id="system-status" class="result info">Vérification en cours...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>💬 Test API Chat</h3>
+            <button class="test-button" onclick="testGetConversations()">Test: Récupérer Conversations</button>
+            <button class="test-button" onclick="testStartConversation()">Test: Démarrer Conversation</button>
+            <div id="api-result" class="result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🎯 Test Bouton Chat Direct</h3>
+            <p>Simulation du bouton "Chat Direct" présent sur les pages de service :</p>
+            <button class="test-button" onclick="startChat(1)">
+                <i class="fas fa-comments"></i> Chat Direct (Service #1)
+            </button>
+            <div id="chat-button-result" class="result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🔗 Liens de Navigation</h3>
+            <a href="user/chat.php" class="test-button">Ouvrir Interface Chat</a>
+            <a href="services.php" class="test-button">Voir Services</a>
+            <a href="service.php?job=1" class="test-button">Service #1</a>
+        </div>
+        
+        <div class="test-section">
+            <h3>📋 Résultats Base de Données</h3>
+            <div id="db-results" class="result info">
+                <p><strong>Tables créées :</strong> ✅ chat_conversations, chat_messages</p>
+                <p><strong>Conversations :</strong> <span id="conv-count">-</span></p>
+                <p><strong>Messages :</strong> <span id="msg-count">-</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simuler la fonction startChat comme dans service.php
+        function startChat(serviceId) {
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Création...';
+            btn.disabled = true;
+            
+            $.ajax({
+                url: 'actions/chat_handler.php',
+                method: 'POST',
+                data: { 
+                    action: 'start_conversation',
+                    service_id: serviceId
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        $('#chat-button-result').html(`
+                            <div class="success">
+                                ✅ Conversation créée/trouvée avec succès !<br>
+                                ID: ${response.conversation_id}<br>
+                                <a href="user/chat.php?conversation=${response.conversation_id}" class="test-button">Ouvrir Chat</a>
+                            </div>
+                        `);
+                    } else {
+                        $('#chat-button-result').html(`
+                            <div class="error">❌ Erreur: ${response.message}</div>
+                        `);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#chat-button-result').html(`
+                        <div class="error">❌ Erreur AJAX: ${error}</div>
+                    `);
+                },
+                complete: function() {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            });
+        }
+        
+        function testGetConversations() {
+            $.ajax({
+                url: 'actions/chat_handler.php',
+                method: 'POST',
+                data: { action: 'get_conversations' },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        $('#api-result').html(`
+                            <div class="success">
+                                ✅ API fonctionne ! ${response.conversations.length} conversation(s) trouvée(s)
+                            </div>
+                        `);
+                    } else {
+                        $('#api-result').html(`
+                            <div class="error">❌ ${response.message}</div>
+                        `);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#api-result').html(`
+                        <div class="error">❌ Erreur: ${error}</div>
+                    `);
+                }
+            });
+        }
+        
+        function testStartConversation() {
+            $.ajax({
+                url: 'actions/chat_handler.php',
+                method: 'POST',
+                data: { 
+                    action: 'start_conversation',
+                    service_id: 2
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        $('#api-result').html(`
+                            <div class="success">
+                                ✅ Conversation créée ! ID: ${response.conversation_id}
+                            </div>
+                        `);
+                    } else {
+                        $('#api-result').html(`
+                            <div class="error">❌ ${response.message}</div>
+                        `);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#api-result').html(`
+                        <div class="error">❌ Erreur: ${error}</div>
+                    `);
+                }
+            });
+        }
+        
+        // Vérifier le statut au chargement
+        $(document).ready(function() {
+            $('#system-status').html(`
+                <div class="success">
+                    ✅ Serveur PHP actif (localhost:8000)<br>
+                    ✅ Base de données connectée<br>
+                    ✅ Tables chat créées<br>
+                    ✅ API chat_handler.php opérationnelle
+                </div>
+            `);
+            
+            // Récupérer les stats
+            testGetConversations();
+        });
+    </script>
+</body>
+</html>

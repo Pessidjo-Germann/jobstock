@@ -136,6 +136,11 @@ if(isset($_GET['job'])){
                                 <div class="jbs-roots-y2">
                                     <div class="jbs-roots-action-groups">
                                         <div class="jbs-roots-action-btns">
+                                            <?php if(isset($_SESSION['connect'])): ?>
+                                                <button type="button" class="btn btn-md btn-success me-2" onclick="startChat(<?=$data['service_id']?>)">
+                                                    <i class="fas fa-comments me-1"></i>Chat Direct
+                                                </button>
+                                            <?php endif; ?>
                                             <button type="button" class="btn btn-md btn-primary" data-bs-toggle="modal" data-bs-target="#applyjob">Contacter Maintenant</button>
                                         </div>
                                         <div class="jbs-roots-action-info">
@@ -324,6 +329,56 @@ if(isset($_GET['job'])){
     </div>
 </div>
 <!-- End Modal -->
+
+<script>
+function startChat(serviceId) {
+    <?php if(isset($_SESSION['connect'])): ?>
+        // Vérifier si l'utilisateur essaie de démarrer un chat avec lui-même
+        const currentUserId = <?=$_SESSION['connect']['id']?>;
+        const serviceOwnerId = <?=$data['user_id']?>;
+        
+        if (currentUserId === serviceOwnerId) {
+            alert('Vous ne pouvez pas démarrer une conversation avec vous-même.');
+            return;
+        }
+        
+        // Désactiver le bouton temporairement
+        const btn = event.target;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Création...';
+        btn.disabled = true;
+        
+        $.ajax({
+            url: 'actions/chat_handler.php',
+            method: 'POST',
+            data: { 
+                action: 'start_conversation',
+                service_id: serviceId
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    // Rediriger vers la page de chat avec la conversation sélectionnée
+                    window.location.href = 'user/chat.php?conversation=' + response.conversation_id;
+                } else {
+                    alert('Erreur: ' + response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Erreur lors de la création de la conversation. Veuillez réessayer.');
+                console.error('Erreur AJAX:', error);
+            },
+            complete: function() {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+    <?php else: ?>
+        alert('Vous devez être connecté pour démarrer une conversation.');
+        window.location.href = 'signup.php';
+    <?php endif; ?>
+}
+</script>
 
 <?php
 		}	} else {

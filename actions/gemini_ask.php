@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../includes/gemini_config.php';
+require_once 'includes/gemini_config.php';
 
 // Vérification que l'utilisateur est connecté
 if (!isset($_SESSION['connect'])) {
